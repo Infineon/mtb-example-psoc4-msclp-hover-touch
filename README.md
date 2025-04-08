@@ -1,22 +1,22 @@
-# PSOC&trade; 4: MSCLP CAPSENSE&trade; Hover Touch
+# PSOC&trade; 4: MSCLP CAPSENSE&trade; hover touch
 
-This code example demonstrates an implementation of a Hover Touch sensor application using CAPSENSE&trade; middleware. A Hover Touch sensor is a type of capacitive touch button with an overlay elevated from the PCB. This implementation eliminates the need for bridging the gap with a conductive material, such as a spring or conductive foam.
-Additionally, this code example also explains how to manually tune the Hover Touch sensor for optimal performance, taking into account parameters like overlay elevation distance, button separation, and response time.
+This code example demonstrates an implementation of hover-touch sensor application using CAPSENSE&trade; middleware. Hover-touch sensor is a type of capacitive touch button with an overlay elevated from the PCB. This implementation eliminates the need for bridging the gap with a conductive material, such as a spring or conductive foam.
+Additionally, this code example also explains how to manually tune the hover-touch sensor for optimal performance, taking into account parameters like overlay elevation distance, button separation, and response time.
 
 [View this README on GitHub.](https://github.com/Infineon/mtb-example-psoc4-msclp-hover-touch)
 
-[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyNDEwNjgiLCJTcGVjIE51bWJlciI6IjAwMi00MTA2OCIsIkRvYyBUaXRsZSI6IlBTT0MmdHJhZGU7IDQ6IE1TQ0xQIENBUFNFTlNFJnRyYWRlOyBIb3ZlciBUb3VjaCIsInJpZCI6ImRhc2F2aWppdCIsIkRvYyB2ZXJzaW9uIjoiMS4wLjAiLCJEb2MgTGFuZ3VhZ2UiOiJFbmdsaXNoIiwiRG9jIERpdmlzaW9uIjoiTUNEIiwiRG9jIEJVIjoiSUNXIiwiRG9jIEZhbWlseSI6IlBTT0MifQ==)
+[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyNDEwNjgiLCJTcGVjIE51bWJlciI6IjAwMi00MTA2OCIsIkRvYyBUaXRsZSI6IlBTT0MmdHJhZGU7IDQ6IE1TQ0xQIENBUFNFTlNFJnRyYWRlOyBob3ZlciB0b3VjaCIsInJpZCI6ImRhc2F2aWppdCIsIkRvYyB2ZXJzaW9uIjoiMi4wLjAiLCJEb2MgTGFuZ3VhZ2UiOiJFbmdsaXNoIiwiRG9jIERpdmlzaW9uIjoiTUNEIiwiRG9jIEJVIjoiSUNXIiwiRG9jIEZhbWlseSI6IlBTT0MifQ==)
 
 
 ## Requirements
 
-- [ModusToolbox&trade;](https://www.infineon.com/modustoolbox) v3.4 or later (tested with v3.4)
+- [ModusToolbox&trade;](https://www.infineon.com/modustoolbox) v3.5 or later (tested with v3.5)
 
-   > **Note:** This code example requires ModusToolbox&trade; v3.4 and is not backward compatible with v3.3 or older.
+   > **Note:** This code example requires ModusToolbox&trade; v3.5 and is not backward compatible with older versions.
 
-- Board support package (BSP) minimum required version: 3.2.0
+- Board support package (BSP) minimum required version: 3.3.0
 - Programming language: C
-- Associated parts: [PSOC&trade; 4000T](https://www.infineon.com/002-33949)
+- Associated parts: [PSOC&trade; 4000T](https://www.infineon.com/002-33949), [PSOC&trade; 4100T Plus](https://www.infineon.com/002-39671)
 
 
 ## Supported toolchains (make variable 'TOOLCHAIN')
@@ -29,20 +29,32 @@ Additionally, this code example also explains how to manually tune the Hover Tou
 ## Supported kits (make variable 'TARGET')
 
 - [PSOC&trade; 4000T Multi-Sense Prototyping Kit](https://www.infineon.com/CY8CPROTO-040T-MS) (`CY8CPROTO-040T-MS`) – Default value of `TARGET`
+- [PSOC&trade; 4100T Plus CAPSENSE&trade; Prototyping Kit](https://www.infineon.com/CY8CPROTO-041TP) (`CY8CPROTO-041TP`)
 
 
 ## Hardware setup
 
-This example uses the Hover Touch Expansion Board with the PSOC&trade; 4000T Multi-Sense Control Board, in default configuration. See the kit user guide to ensure that the board is configured and connected correctly.
+This example uses the board's default configuration. See the kit user guide to configure the hardware to operate at the required operating voltage. To setup the device VDDA supply voltage, see the section [Set up the VDDA supply voltage and debug mode in Device Configurator](#set-up-the-vdda-supply-voltage-and-debug-mode-in-device-configurator).
 
-> **Note:** Some PSOC&trade; 4 kits ship with KitProg2 installed. ModusToolbox&trade; requires KitProg3. Before using this code example, make sure that the board is upgraded to KitProg3. The tool and instructions are available in the [Firmware Loader](https://github.com/Infineon/Firmware-loader) GitHub repository. If you do not upgrade, you will see an error like "unable to find CMSIS-DAP device" or "KitProg firmware is out of date".
+This application is tuned to perform optimally at the default voltage. However, you can observe the basic functionality at other supported voltages.
 
+**Table 1. Kit user guide and supported voltages**
+
+   Kit | User guide  | 1.8 V | 3.3 V | 5 V
+   :-------- |:----------- |:----------- |:----- |:-----
+   CY8CPROTO-040T-MS| [CY8CPROTO-040T-MS PSOC&trade; 4000T Multi-Sense Prototyping Kit guide](https://www.infineon.com/002-40406)  | Yes | Yes* | Yes
+   CY8CPROTO-041TP| [CY8CPROTO-041TP PSOC&trade; 4100T Plus CAPSENSE&trade; Prototyping Kit guide](https://www.infineon.com/002-40273) | Yes | Yes | Yes*
+
+    
+    
+   Yes* - Kit default operating voltage.
+<br>
 
 ## Software setup
 
 See the [ModusToolbox&trade; tools package installation guide](https://www.infineon.com/ModusToolboxInstallguide) for information about installing and configuring the tools package.
 
-This example requires [ModusToolbox™ CAPSENSE™ and Multi-Sense Pack](https://softwaretools.infineon.com/tools/com.ifx.tb.tool.modustoolboxpackmultisense) to be installed.
+> **Note**: [ModusToolbox&trade; CAPSENSE&trade; and Multi-Sense Pack](https://softwaretools.infineon.com/tools/com.ifx.tb.tool.modustoolboxpackmultisense) need to be installed if you have to work with ModusToolbox&trade; v3.4. However, it is not required for ModusToolbox&trade; v3.5 or later.
 
 
 ## Using the code example
@@ -56,21 +68,21 @@ The ModusToolbox&trade; tools package provides the Project Creator as both a GUI
 
 1. Open the Project Creator GUI tool
 
-   There are several ways to do this, including launching it from the dashboard or from inside the Eclipse IDE. For more details, see the [Project Creator user guide](https://www.infineon.com/ModusToolboxProjectCreator) (locally available at *{ModusToolbox&trade; install directory}/tools_{version}/project-creator/docs/project-creator.pdf*).
+   There are several ways to do this, including launching it from the dashboard or from inside the Eclipse IDE. For more details, see the [Project Creator user guide](https://www.infineon.com/ModusToolboxProjectCreator) (locally available at *{ModusToolbox&trade; install directory}/tools_{version}/project-creator/docs/project-creator.pdf*)
 
 2. On the **Choose Board Support Package (BSP)** page, select a kit supported by this code example. See [Supported kits](#supported-kits-make-variable-target)
 
-   > **Note:** To use this code example for a kit not listed here, you may need to update the source files. If the kit does not have the required resources, the application may not work.
+   > **Note:** To use this code example for a kit not listed here, you may need to update the source files. If the kit does not have the required resources, the application may not work
 
 3. On the **Select Application** page:
 
    a. Select the **Applications(s) Root Path** and the **Target IDE**
 
-   > **Note:** Depending on how you open the Project Creator tool, these fields may be pre-selected for you.
+      > **Note:** Depending on how you open the Project Creator tool, these fields may be pre-selected for you
 
    b. Select this code example from the list by enabling its check box
 
-   > **Note:** You can narrow the list of displayed examples by typing in the filter box.
+      > **Note:** You can narrow the list of displayed examples by typing in the filter box
 
    c. (Optional) Change the suggested **New Application Name** and **New BSP Name**
 
@@ -85,10 +97,10 @@ The 'project-creator-cli' tool can be used to create applications from a CLI ter
 
 Use a CLI terminal to invoke the 'project-creator-cli' tool. On Windows, use the command-line 'modus-shell' program provided in the ModusToolbox&trade; installation instead of a standard Windows command-line application. This shell provides access to all ModusToolbox&trade; tools. You can access it by typing "modus-shell" in the search box in the Windows menu. In Linux and macOS, you can use any terminal application.
 
-The following example clones the "[PSOC&trade; 4: MSCLP CAPSENSE&trade; Hover Touch 4](https://github.com/Infineon/mtb-example-psoc4-msclp-hover-touch)" application with the desired name "MyHoverTouch" configured for the *CY8CPROTO-040T-MS* BSP into the specified working directory, *C:/mtb_projects*:
+The following example clones the "[mtb-example-psoc4-msclp-hover-touch](https://github.com/Infineon/mtb-example-psoc4-msclp-hover-touch)" application with the desired name "HoverTouch" configured for the *CY8CPROTO-040T-MS* BSP into the specified working directory, *C:/mtb_projects*:
 
    ```
-   project-creator-cli --board-id CY8CPROTO-040T-MS --app-id mtb-example-psoc4-msclp-hover-touch-4 --user-app-name MyHoverTouch --target-dir "C:/mtb_projects"
+   project-creator-cli --board-id CY8CPROTO-040T-MS --app-id mtb-example-psoc4-msclp-hover-touch-4 --user-app-name HoverTouch --target-dir "C:/mtb_projects"
    ```
 
 
@@ -131,11 +143,11 @@ For more details, see the [Visual Studio Code for ModusToolbox&trade; user guide
 </details>
 
 
-<details><summary><b>Keil µVision</b></summary>
+<details><summary><b>Arm&reg; Keil&reg; µVision&reg;</b></summary>
 
-Double-click the generated *{project-name}.cprj* file to launch the Keil µVision IDE.
+Double-click the generated *{project-name}.cprj* file to launch the Keil&reg; µVision&reg; IDE.
 
-For more details, see the [Keil µVision for ModusToolbox&trade; user guide](https://www.infineon.com/MTBuVisionUserGuide) (locally available at *{ModusToolbox&trade; install directory}/docs_{version}/mt_uvision_user_guide.pdf*).
+For more details, see the [Arm&reg; Keil&reg; µVision&reg; for ModusToolbox&trade; user guide](https://www.infineon.com/MTBuVisionUserGuide) (locally available at *{ModusToolbox&trade; install directory}/docs_{version}/mt_uvision_user_guide.pdf*).
 
 </details>
 
@@ -158,15 +170,12 @@ For more details, see the [ModusToolbox&trade; tools package user guide](https:/
 </details>
 
 
+
 ## Operation
 
 1. Connect the board to your PC using the provided USB cable through the KitProg3 USB connector
 
-   **Figure 1. Connecting the kit with the PC**
-
-   <img src="images/board-image.png" alt="Figure 1" width="800"/> 
-
-3. Program the board using one of the following:
+2. Program the board using one of the following:
 
    <details><summary><b>Using Eclipse IDE</b></summary>
 
@@ -179,6 +188,7 @@ For more details, see the [ModusToolbox&trade; tools package user guide](https:/
    <details><summary><b>In other IDEs</b></summary>
 
    Follow the instructions in your preferred IDE.
+
    </details>
 
 
@@ -195,18 +205,30 @@ For more details, see the [ModusToolbox&trade; tools package user guide](https:/
       ```
    </details>
 
-4. After programming, the application starts automatically
+3. After programming, the application starts automatically
 
-   > **Note:** After programming, you might see the following error message if debug mode is disabled. This can be ignored or enabling the debug mode will solve this error.
+   > **Note:** After programming, you may see the following error message if debug mode is disabled, See Table 10 for the default debug configuration in the supported kits. This can be ignored or enabling the debug mode will solve this error.
 
-   ```bash
+   ```c
    "Error: Error connecting Dp: Cannot read IDR"
    ```
+4. To test the application, place your finger over the hover-touch expansion board buttons  
+   
+   LED turns on when touched and turns off when the finger is lifted. For LED indications, see **Table 2**
 
+   **Table 2. LED indications**
+
+   Button pressed | LED indication 
+   :----------- | :-------------
+      BTN1        | LED D1 turns on
+      BTN2        | LED D2 turns on
+      BTN3        | LED D3 turns on
+      BTN4        | LED D4 turns on
+<br>
 
 ### Monitor data using tuner
 
-1. Open CAPSENSE&trade; Tuner from the **Tools** section in the **IDE Quick Panel**
+1. Open CAPSENSE&trade; Tuner from the **BSP Configurator** section in the **Quick Panel**
 
    You can also run the CAPSENSE&trade; Tuner application in standalone mode from *{ModusToolbox&trade; install directory}/ModusToolbox/tools_{version}/capsense-configurator/capsense-tuner*. In this case, after opening the application, select **File** > **Open** and open the *design.cycapsense* file of the respective application, which is present in the *{Application root directory}/bsps/TARGET_APP_\<BSP-NAME>/config* folder.
 
@@ -214,73 +236,71 @@ For more details, see the [ModusToolbox&trade; tools package user guide](https:/
 
 2. Ensure that the status LED is on and not blinking. This indicates that the onboard KitProg3 is in CMSIS-DAP bulk mode. See [Firmware-loader](https://github.com/Infineon/Firmware-loader) to learn how to update the firmware and switch modes in KitProg3
 
-3. In the Tuner application, click on the **Tuner Communication Setup** icon or select **Tools** > **Tuner Communication setup**
+3. In the Tuner application, click the **Tuner Communication Setup** icon or select **Tools** > **Tuner Communication setup**
 
    In the window that appears, select I2C under KitProg3 and configure it as follows:
 
    - **I2C address:** 8
-   - **Sub-address:** 2-Bytes
+   - **Sub-address:** 2 Bytes
    - **Speed (kHz):** 400
 
    These are the same values set in the EZI2C resource.
 
-   **Figure 2. Tuner Communication Setup parameters**
+   **Figure 1. Tuner Communication Setup parameters**
 
-   <img src="images/tuner-comm-setup.png" alt="Figure 2" width="600"/> 
+   <img src="images/tuner-comm-setup.png" width="600"/> 
 
 4. Click **Connect** or select **Communication** > **Connect** to establish a connection
 
-   **Figure 3. Establish connection**
+   **Figure 2. Establish connection**
 
-   <img src="images/tuner-connect.png" alt="Figure 3" width="300"/>
-
+   <img src="images/tuner-connect.png"  width="300"/>
 
 5. Click **Start** or select **Communication** > **Start** to start data streaming from the device
 
-   **Figure 4. Start tuner communication**
+   **Figure 3. Start tuner communication**
 
-   <img src="images/tuner-start.png" alt="Figure 4" width="300"/>
+   <img src="images/tuner-start.png" width="300"/>
 
    The **Widget/Sensor Parameters** tab is updated with the parameters configured in the CAPSENSE&trade; Configurator window. The tuner displays the data from the sensor in **Widget View** and **Graph View** tabs.
 
-6. Set the **Read mode** to **Synchronized**. Navigate to the **Widget View** tab and observe  that the sensor widget is highlighted in blue color when the corresponding button is touched. Also notice that, upon touching each button, the corresponding LED above the button lights up
+6. Set the **Read mode** to **Synchronized**. Navigate to the **Widget View** tab and observe  that the sensor widget is highlighted in blue color when the corresponding button is touched. Also notice that, upon touching each button, the corresponding LED above the button lights up. See **Table 2** for LED indications.
 
-   Button pressed | LED indication 
-   :----------- | :-------------
-      BTN1        | LED D1 turns ON
-      BTN2        | LED D2 turns ON
-      BTN3        | LED D3 turns ON
-      BTN4        | LED D4 turns ON
+   **Figure 4. Widget view of the CAPSENSE&trade; Tuner**
+
+   <img src="images/widget-view.png" width="800"/>
+
       
 <br>
 
-8. View the raw counts of each of the buttons through the **Graph View tab**. The status of each of the buttons can be observed in the status window
+1. View the raw counts of each of the buttons through the **Graph View tab**. The status of each of the buttons can be observed in the status window
 
    **Figure 5. Hover Touch button Rawcounts and Status**
 
-   <img src="images/capsense-tuner-graph-view.png" alt="Figure 5" width="800"/>
+   <img src="images/capsense-tuner-graph-view.png" width="800"/>
 
+2. Switch to the **SNR Measurement** tab and verify that the SNR is above **5:1** by performing the following steps:
 
-9. Switch to the **SNR Measurement** tab and verify that the SNR is above **5:1** by performing the following steps
-
-   1. Select the button sensor **Button1_Sns0** sensor under the **Button1** widget and click **Acquire Noise**, as shown in **Figure 6**
+   a. Select the button sensor **Button1_Sns0** sensor under the **Button1** widget and click **Acquire Noise**, as shown in **Figure 6**
       
       **Figure 6. CAPSENSE&trade; Tuner - SNR measurement: Acquire noise**
 
-      <img src="images/capsense-tuner-acquire-noise.png" alt="Figure 6" width="800"/>
+      <img src="images/capsense-tuner-acquire-noise.png" width="800"/>
 
      
 
-   2. Touch the same button again and click **Acquire Signal**, as shown in **Figure 7** and wait for the SNR measurement to complete. Repeat above steps 1 and 2 for all the button sensors to measure SNR
+   b. Touch the same button again and click **Acquire Signal**, as shown in **Figure 7** and wait for the SNR measurement to complete   
+   
+   Repeat steps a and b for all the button sensors to measure SNR. 
 
-      **Figure 7. CAPSENSE&trade; Tuner - SNR measurement: Acquire signal**
+   **Figure 7. CAPSENSE&trade; Tuner - SNR measurement: Acquire signal**
 
-      <img src="images/capsense-tuner-acquire-signal.png" alt="Figure 7" width="800"/>
+   <img src="images/capsense-tuner-acquire-signal.png" width="800"/>
       
       Ensure that the SNR is above **5:1**.
 
 
-## Tuning Procedure
+## Tuning procedure
 
 <details><summary><b>Create custom BSP for your board</b></summary>
 
@@ -292,13 +312,13 @@ For more details, see the [ModusToolbox&trade; tools package user guide](https:/
 
 <br>
 
-> **Note:** See the section Selecting CAPSENSE&trade; hardware parameters in [AN85951 PSOC&trade; 4 and PSOC&trade; 6 MCU CAPSENSE&trade; design guide](https://www.infineon.com/AN85951) to learn the considerations for selecting each parameter value.
+ > **Note:** See the section "Selecting CAPSENSE&trade; hardware parameters" in [AN85951 PSOC&trade; 4 and PSOC&trade; 6 MCU CAPSENSE&trade; design guide](https://www.infineon.com/AN85951) to learn the considerations for selecting each parameter value.
 
 The tuning flow of the **Hover Touch Sensing Widget** is shown in **Figure 8**.
 
-   **Figure 8. Tuning Flow of Hover Touch Sensor**
+   **Figure 8. Tuning flow of the hover-touch sensor**
 
-   <img src="images/tuning-flow.png" alt="Figure 8" width="750"/>
+   <img src="images/tuning-flow.png" width="750"/>
 
 
 <br/>
@@ -309,9 +329,11 @@ Perform the following to tune the **Hover Touch Sensing Widget**:
 
 - [Stage 2: Set sense clock frequency](#stage-2-set-sense-clock-frequency)
 
-- [Stage 3: Fine-tune sensitivity for required SNR and refresh rate](#stage-3-fine-tune-for-required-snr)
+- [Stage 3: Measure sensor capacitance to set CDAC tuning mode](#stage-3-measure-sensor-capacitance-to-set-cdac-tuning-mode)
 
-- [Stage 4: Tune threshold parameters](#stage-4-tune-threshold-parameters)
+- [Stage 4: Fine tune for required SNR](#stage-4-fine-tune-for-required-snr)
+
+- [Stage 5: Tune the threshold parameters](#stage-5-tune-threshold-parameters)
 
 
 ### Stage 1: Set the initial hardware parameters
@@ -326,11 +348,12 @@ Perform the following to tune the **Hover Touch Sensing Widget**:
 
    **Figure 9. Enable CAPSENSE&trade; in Device Configurator**
 
-   <img src="images/device-configurator.png" alt="Figure 9"/>
+   <img src="images/device-configurator.png" />
 
-   Save the changes and close the window.
 
-4. Launch the CAPSENSE&trade; Configurator tool
+4. Save the changes and close the window
+
+5. Launch the CAPSENSE&trade; Configurator tool
 
    You can launch the CAPSENSE&trade; Configurator tool in Eclipse IDE for ModusToolbox&trade; from the "CAPSENSE&trade;" peripheral setting in the Device Configurator or directly from the **Tools** section in the **IDE Quick Panel**.
 
@@ -342,75 +365,75 @@ Perform the following to tune the **Hover Touch Sensing Widget**:
 
    **Figure 10. CAPSENSE&trade; Configurator - Basic tab**
 
-   <img src="images/capsense-configurator-baisc.png" alt="Figure 10"/>
+   <img src="images/capsense-configurator-baisc.png" />
 
 
 7.  Do the following in the **General** tab under the **Advanced** tab:
 
-      **Table 1. Widget details**
+      **Table 3. Widget details**
 
       Parameter | Setting | Comment
       :-------- |:----------- |:-----------
-      CAPSENSE&trade; IMO Clock frequency | 46 | IMO clock Frequency
+      CAPSENSE&trade; IMO Clock frequency | 46 | IMO clock frequency
       Modulator clock divider | 1 | Set to obtain the optimum modulator clock frequency
       Number of init sub-conversions | 3 | Set to ensure proper initialization of CAPSENSE&trade;
-    
+   
     <br>
 
       **Figure 11. CAPSENSE&trade; Configurator - General settings**
 
-      <img src="images/capsense-configurator-advanced-general.png" alt="Figure 11"/>
+      <img src="images/capsense-configurator-advanced-general.png"/>
+
+
 
 8. Go to the **CSD Settings** tab and make the following changes:
 
-   **Table 2. Scan settings**
+   **Table 4. Scan settings**
 
-   Parameter | CY8CPROTO-040T-MS |Comment
-   :-------- |:----------- |:-----------
-   Inactive sensor connection | Shield | Connects the inactive sensors (configured sensors which have not been scanned in a given scan-slot) to the driven shield.
-   Shield mode | Active | The driven shield is a signal that replicates the sensor-switching signal. It helps reduce the sensor parasitic capacitance. 
-   Total shield count | 1 |  Selects the number of shield electrodes used in the design.
-   Raw count calibration level (%) | 85 | If the sensor raw count saturates (equals max raw count) upon the finger touching the surface, reduce the raw count calibration level (%). This will prevent raw count saturation.
+   Parameter | CY8CPROTO-040T-MS | CY8CPROTO-041TP | Comment
+   :-------- |:----------- |:-----------|:-----------
+   Inactive sensor connection | Shield | Shield | Connects the inactive sensors (configured sensors which have not been scanned in a given scan-slot) to the driven shield
+   Shield mode | Active | Active | The driven shield is a signal that replicates the sensor-switching signal. It helps reduce the sensor parasitic capacitance
+   Total shield count | 1 | 1 |  Selects the number of shield electrodes used in the design
+   Raw count calibration level (%) | 85 | 85 | If the sensor raw count saturates (equals max raw count) upon the finger touching the surface, reduce the raw count calibration level (%). This will prevent raw count saturation
   
    <br>
 
    **Figure 12. CAPSENSE&trade; Configurator - Advanced CSD settings**
 
-   <img src="images/capsense-configurator-advanced-csd.png" alt="Figure 12"/>
+   <img src="images/capsense-configurator-advanced-csd.png" />
 
-9. Go to the **Widget Details** tab
+9. Click the **Widget Details** tab. Select the **ButtonX** from the left pane and set the following:
 
-   Select the **ButtonX** from the left pane and set the following:
+   **Table 5. Initial widget parameter setting for Button Widgets**
 
-   **Table 3. Initial widget parameter setting for Button Widgets**
-
-   Parameter | Button1 Setting | Button2 Setting | Button3 Setting | Button4 Setting | Comment
+   Parameter | Button1 | Button2 | Button3 | Button4 | Comment
    :-------- |:--------------- |:--------------- |:--------------- |:--------------- |:-------
    Sense clock divider | Default | Default | Default | Default | Value will be set in [Stage 2:  Set sense clock frequency](#stage-2-set-sense-clock-frequency)
-   Clock source | Direct | Direct | Direct | Direct | Direct clock is a constant frequency sense clock source. When you choose this option, the sensor pin switches with a constant frequency.
-   Number of sub-conversions | 256 | 560 | 560 | 512 | Good starting point for sufficient signal for the hover touch application. This value has to be adjusted as required in [Stage 3: Fine-tune for required SNR, power, and refresh rate](#stage-3-fine-tune-for-required-snr).
-   Reference CDAC Mode  | Auto | Auto| Auto | Auto | Setting it to Auto for initial Auto Calibration
-   Reference CDAC Boost | Disabled | Disabled | Disabled | Disabled | This boosts the Signal for a better sensitivity. Usually required if increasing the Number of sub-conversion is not sufficient for the sensitivity
-   Fine CDAC Mode | Auto |  Auto | Auto |  Auto | Setting it to Auto for initial Auto Calibration
-   Compensation CDAC Mode | Auto | Auto |  Auto | Auto | Setting it to Auto for initial Auto Calibration
-   Compensation CDAC divider Mode | Auto | Auto | Auto | Auto | Setting it to Auto for initial Auto Calibration
-   CDAC dither mode | Disabled | Disabled | Disabled | Disabled | Not required
+   Clock source | Direct | Direct | Direct | Direct | Direct clock is a constant frequency sense clock source. When you choose this option, the sensor pin switches with a constant frequency
+   Number of sub-conversions | 60 | 60 | 60 | 60 | Good starting point for sufficient signal for the hover-touch application. This value has to be adjusted as required in [Stage 4: Fine-tune for required SNR](#stage-4-fine-tune-for-required-snr)
+   Finger threshold  | 65535 | 65535| 65535 | 65535 | It is also set to the maximum to avoid triggering of sensor during tunning
+   Noise threshold | 10 | 10 | 10 | 10 | Baseline is not updated when raw count is above baseline + Noise threshold.
+   Negative noise threshold | 10 |  10 | 10 |  10 | Baseline is not updated when raw count is above baseline - Negative noise threshold
+   Low baseline reset | 10 | 10 |  10 | 10 | If raw count is lower than the negative noise threshold for this many samples, baseline is reset to current raw count
+   Hysteresis | 10 | 10 | 10 | 10 | Prevents sensor status toggling due to system noise
+   ON debounce | 3 | 3 | 3 | 3 | Number of consecutive scans during which a sensor must be active so that a touch is reported
 
    <br>
 
    **Figure 13. CAPSENSE&trade; Configurator - Widget Details tab**
 
-   <img src="images/capsense-configurator-widget-details-tab.png" alt="Figure 13"/>
+   <img src="images/capsense-configurator-widget-details-tab.png" />
 
    <br>
 
    > **Note:**  Variations in trace length and coupling to ground can cause the buttons to have different Cp. Therefore the buttons might need different  N<sub>subs</sub> so that they have similar sensitivity to a touch.
 
-10.  Go to the **Scan Configuration** tab to select the pins and scan slots. Configure the pins for electrodes using the drop-down menu
+10.  Go to the **Scan Configuration** tab to select the pins and scan slots. Configure the pins for electrodes using the drop down menu
 
       **Figure 14. CAPSENSE&trade; Configurator -  Scan Configuration tab**
 
-     <img src="images/capsense-configurator-scan-configuration.png" alt="Figure 14"/>
+     <img src="images/capsense-configurator-scan-configuration.png" />
 
 
 ### Stage 2: Set sense clock frequency
@@ -422,15 +445,15 @@ See **Figure 15** and **Figure 16** for the waveforms observed on the sensors. *
 
    **Figure 15. Proper charge cycle of a sensor**
 
-   <img src="images/csdrm-waveform.png" alt="Figure 15" width="500"/>
+   <img src="images/csdrm-waveform.png" width="500"/>
 
    <br>
 
    **Figure 16. Improper charge cycle of a sensor**
 
-   <img src="images/csdrm-waveform_improper.png" alt="Figure 16" width="500"/>
+   <img src="images/csdrm-waveform_improper.png" width="500"/>
    
-To set the proper sense clock frequency, follow these steps:
+To set the proper sense clock frequency, perform the following steps:
 
 1. Program the board and launch CAPSENSE&trade; Tuner
 
@@ -438,36 +461,52 @@ To set the proper sense clock frequency, follow these steps:
 
 3. If the charging is incomplete, increase the sense clock divider. Do this in CAPSENSE&trade; Tuner by selecting the widget and editing the sense clock divider parameter in the **Widget/Sensor Parameters** panel
 
-      > **Note:**
-
-      - The sense clock divider should be **divisible by 4**. This ensures that all four scan phases have equal durations
-
-      - After editing the value, click the **Apply to Device** button and observe the waveform again. Repeat this until you observe complete settling
-
-      - Using a passive probe will add an additional parasitic capacitance of around 15 pF; therefore, it should be considered while tuning
+   > **Note:** 
+   - The sense clock divider should be divisible by 4. This ensures that all four scan phases have equal durations 
+   - After editing the value click the **Apply to Device** button and observe the waveform again. Repeat this until complete settling is observed
+   - Using a passive probe will add an additional parasitic capacitance of around 15 pF; therefore, it should be considered during tuning
 
       
 4. Click **Apply to Project** to save the configuration to your project
 
-      **Figure 17. Sense clock divider setting**
+   **Figure 17. Sense clock divider setting**
 
-      <img src="images/sense-clock-divider-setting.png" alt="Figure 17" width="250"/>
+      <img src="images/sense-clock-divider-setting.png" width="250"/>
 
 
 5. Repeat this process for all the widgets and the shield. Each sensor may require a different sense clock divider value to charge or discharge completely. But all the sensors under the same widget need to have the same sense clock source, sense clock divider, and number of sub-conversions. Therefore, consider the largest sense clock divider required by the sensor for that widget
    
    <br>
 
-   **Table 4. Sense clock divider settings obtained for supported kits**
+   **Table 6. Sense clock divider settings obtained for supported kits**
 
-   Parameter |CY8CPROTO-040T-MS
-   :-------- |:----------- 
-   Sense clock divider | 48
+   Supported kits    | Button1 | Button2 | Button3 | Button4
+   :------------| :-----  | :-----  | :-----  | :-----
+   CY8CPROTO-040T-MS |   48   |   48   |   48   |   48   
+   CY8CPROTO-041TP |   48   |   48   |   48   |   48  
    
 <br>
 
+### Stage 3: Measure sensor capacitance to set CDAC tuning mode
 
-### Stage 3: Fine tune for required SNR
+Generally, CDAC tuning mode is recommended to be set to **Auto**. However, the appropriate tuning mode to use has some dependency on the sensor parasitic capacitance (Cp).
+ 
+ 
+In order to avoid signal variation across devices in production, PSOC&trade; 4100T Plus devices have CDAC trim codes in SFlash (read-only). This code is used to scale the Reference CDAC and Fine CDAC parameters, which compensates for variations in the CDAC and brings down the overall signal variation across units.
+
+This trimming is applicable only in the following scenarios: 
+- Only for CSD widgets (regular and low power)
+- Sensor Cp is less than 4 pF
+- Reference CDAC and Fine CDAC are set to **Manual** mode
+
+
+   >   **Note:** 
+   Select CDAC tuning mode **Auto**, if sensor Cp is above 4 pF. This is applicable for sensing methods other than CSD.
+
+   >  **Note:** To determine the applicable CDAC tuning mode for configuration in this code example, measure the sensor parasitic capacitance (Cp). If Cp is less than 4 pF, Reference CDAC and Fine CDAC should be configured to **Manual** mode. See [PSOC&trade; 4: MSCLP low-power self-capacitance button](https://github.com/Infineon/mtb-example-psoc4-msclp-low-power-csd-button) code example for the procedure to measure Cp and steps to configure the CDACs manually.
+
+
+### Stage 4: Fine tune for required SNR
 
 The sensor should be tuned to have a minimum signal-to-noise ratio (SNR) of 5:1 and a minimum signal of 50 to ensure reliable operation. The sensitivity can be increased by increasing the number of sub-conversions, and noise can be decreased by enabling filters.
 
@@ -481,44 +520,60 @@ Follow these steps for optimizing these parameters:
 
    > **Note:** Number of sub-conversion should be greater than or equal to 8.
   
-3. Repeat steps 1 and 2 until the Measured SNR is greater than **5:1** and the signal count is greater than 50
+3. Repeat steps 1 and 2 until the measured SNR is greater than **5:1** and the signal count is greater than 50
 
-4. If the system is noisy (>40% of signal), enable filters
+4. If the system is very noisy (>40% of signal), enable filters
 
-   Enable the IIR filter for noise reduction.
+   This example has the CIC2 filter enabled, which increases the resolution for the same scan time. See [AN234231 - PSOC™ 4 CAPSENSE™ ultra-low-power capacitive sensing techniques](https://www.infineon.com/AN234231) for detailed information on the CIC2 filter. Whenever CIC2 filter is enabled, it is recommended to enable the IIR filter for optimal noise reduction. Therefore, this example has the IIR filter enabled as well.
+   <ol type="a">
+   <li>
 
-   To enable and configure filters available in the system:
+   Open **CAPSENSE&trade; Configurator** from ModusToolbox&trade; **Quick Panel** and select the appropriate filter as shown in **Figure 18**.
 
-   a. Open **CAPSENSE&trade; Configurator** from ModusToolbox&trade; **Quick Panel** and select the appropriate filter
+   **Figure 18. Filter settings in CAPSENSE&trade; Configurator**
 
-      **Figure 18. Filter settings in CAPSENSE&trade; Configurator**
+   <img src="images/capsense-configurator-filter-settings.png" width="800"/>
+   </li>
+   
+   <br>
+   <li>
 
-      <img src="images/capsense-configurator-filter-settings.png" alt="Figure 18" width="800"/>
+   Enable the filter based on the type of noise in your system. For filter descriptions refer to **Table 7** and See [AN85951 – PSOC&trade; 4 and PSOC&trade; 6 MCU CAPSENSE&trade; design guide](https://www.infineon.com/AN85951) for more details
+   </li>
+   
+      **Table 7. Filters description**
 
-      > **Note** : Add the filter based on the type of noise in your measurements. See [ModusToolbox&trade; CAPSENSE&trade; Configurator user guide](https://www.infineon.com/ModusToolboxCapSenseConfig) for details.
+      Filter   | Description
+      :---------------------| :----------------- 
+      Median  | Eliminates noise spikes from motors and switching power supplies
+      Average  | Eliminates periodic noise (e.g., from power supplies)
+      First order IIR | Software IIR filter which eliminates high frequency noise, low coefficient results in lower noise but slows down response
+      Hardware IIR | Eliminate high frequency noise, low coefficient means lower filtering, while higher response time
 
-   b. Click **Save** and close CAPSENSE&trade; Configurator. Program the device to update the filter settings
+   <li>
 
-      > **Note** : Increasing the number of sub-conversions and enabling filters increases the scan time, which in turn reduces sensor responsiveness and increases power consumption. Therefore, the number of sub-conversions and filter configuration must be optimized to achieve a balance between SNR, power, and refresh rate.
+   Click **Save** and close CAPSENSE&trade; Configurator. Program the device to update the filter settings
+   
+   > **Note:** Increasing the number of sub-conversions and enabling filters will increase the scan time, which in turn decreases the responsiveness of the sensor. Increase in the scan time also increases power consumption. Therefore, the number of sub-conversions and filter configurations must be optimized to achieve a balance between SNR, power, and refresh rate.
+   </ol>
 
-
-### Stage 4: Tune threshold parameters
+### Stage 5: Tune threshold parameters
 
 Various thresholds, relative to the signal, need to be set for each sensor. Do the following in CAPSENSE&trade; Tuner to set up the thresholds for a widget:
 
 1. Switch to the **Graph View** tab and select **Button1**
 
-2. Touch the Hover Touch button and monitor the signal in the **Sensor signal** graph, as shown in **Figure 19**
+2. Touch the hover-touch button and monitor the signal in the **Sensor signal** graph, as shown in **Figure 19**
 
    **Figure 19. Sensor signal when the sensor is touched**
 
-   <img src="images/tuner-diff-signal.png" alt="Figure 19" width="800"/>
+   <img src="images/tuner-diff-signal.png" width="800"/>
 
    <br>
 
-3. Note the signal measured for touch for each buttons
+3. Note the signal measured for each button. Thresholds parameters and respective signals observed for supported kits is shown in **Table 8**. Set the thresholds accordingly 
 
-      **Table 5. Measured Signal**
+      **Table 8. Measured Signal**
 
       Parameter    | Button1 | Button2 | Button3 | Button4
       :------------| :-----  | :-----  | :-----  | :-----
@@ -526,33 +581,33 @@ Various thresholds, relative to the signal, need to be set for each sensor. Do t
 
       <br>
 
-   Set the thresholds accordingly
+      **Table 9. Settings for parameters related to touch detection**
+      Parameter                  | Button1 | Button2 | Button3 | Button4 | Recommendations
+      :--------------------      | :----- | :-----| :-----| :-----| :-----
+      Finger threshold           | 150 | 170 | 140 | 120 |  80% of the touch signal
+      Noise threshold            | 40  | 40  | 30  | 30  |  40% of the touch signal
+      Negative noise threshold   | 40  | 40  | 30  | 30  |  40% of the touch signal
+      Low baseline reset         | 30  | 30  | 30  | 30  |  30 (by default)
+      Hysteresis                 | 14  | 16  | 12  | 11  |  10% of the touch signal
+      ON debounce                | 3   | 3   | 3   | 3   |  3 (by default)
 
-   Parameter                  | Button1 | Button2 | Button3 | Button4 | Remarks
-   :--------------------      | :----- | :-----| :-----| :-----| :-----
-   Finger threshold           | 150 | 170 | 140 | 120 |  80% of the touch signal
-   Noise threshold            | 40  | 40  | 30  | 30  |  40% of the touch signal
-   Negative noise threshold   | 40  | 40  | 30  | 30  |  40% of the touch signal
-   Low baseline reset         | 30  | 30  | 30  | 30  |  30 (by default)
-   Hysteresis                 | 14  | 16  | 12  | 11  |  10% of the touch signal
-   ON debounce                | 3   | 3   | 3   | 3   |  3 (by default)
+      <br>
 
-   <br>
-
-   > **Note:** The above numbers are fine tuned for the best performance of the buttons, which might not adhere to the recommended calculation mentioned in the remarks tabs. Use the recommended numbers as starting point and fine tune the thresholds.
+   > **Note:** The above numbers are fine tuned for the best performance of the buttons, which might not adhere to the recommended calculation mentioned in the recommendations column. Use the recommendations as starting point and fine tune the thresholds.
 The thresholds need to be increased such that the button does not get triggered by a touch on a neighbouring button.
 
 
-   **Figure 20. Widget threshold parameters**
+    **Figure 20. Widget threshold parameters**
 
-   <img src="images/tuner-threshold-settings.png" alt="Figure 20" width="350"/>
+   <img src="images/tuner-threshold-settings.png" width="350"/>
    <br>
 
-5. Click **Apply to Device**. After applying the configuration test the performance by touching the Hover Touch button. If your sensor is tuned correctly, you will observe the touch status of the corresponding button go from 0 to 1 in the **Status** panel of the **Graph View** tab, as shown in **Figure 21**. The status of the button is also indicated by the LED in the kit; the LED turns ON when the finger touches the Hover Touch button and turns OFF when the finger is removed
+1. Click **Apply to Device**  
+    After applying the configuration, test the performance by touching the hover-touch button. If your sensor is tuned correctly, you will observe the touch status of the corresponding button go from 0 to 1 in the **Status** panel of the **Graph View** tab, as shown in **Figure 21**. The status of the button is also indicated by the LED in the kit; the LED turns on when the finger touches the hover-touch button and turns off when the finger is removed.
 
    **Figure 21. Apply settings to the device**
 
-   <img src="images/tuner-apply-settings-device.png" alt="Figure 21" width="400"/>
+   <img src="images/tuner-apply-settings-device.png" width="400"/>
 
    <br>
 
@@ -566,7 +621,16 @@ You can debug the example to step through the code.
 
 Use the **\<Application Name> Debug (KitProg3_MiniProg4)** configuration in the **Quick Panel**. For details, see the "Program and debug" section in the [Eclipse IDE for ModusToolbox&trade; user guide](https://www.infineon.com/MTBEclipseIDEUserGuide).
 
+See, **Table 10** for the default debug configuration in the supported kits.
 
+**Table 10. Debug mode option status**
+
+   Kit  | Debug mode 
+   :----| :----------
+   CY8CPROTO-040T-MS | Disabled
+   CY8CPROTO-041TP | Enabled  
+
+<br>
 </details>
 
 
@@ -579,16 +643,16 @@ Follow the instructions in your preferred IDE.
 
 ## Design and implementation
 
-The project contains four buttons configured as a regular button widget in CSD-RM sensing mode. See the [Tuning procedure](#tuning-procedure) section for step-by-step instructions to configure other settings of the **CAPSENSE&trade; Configurator**.
+The project contains four buttons configured as a regular button widget in CSD-RM sensing mode. See the [Tuning procedure](#tuning-procedure) section for step-by-step instructions to configure other settings of the CAPSENSE&trade; Configurator.
 
-There are four user LEDs used in this project. The LEDs show the corresponding button touch status: it turns ON when touched and turns OFF when the finger is lifted. 
+There are four user LEDs used in this project. The LEDs show the corresponding button touch status: it turns on when touched and turns off when the finger is lifted. 
 
 The project uses [CAPSENSE&trade; middleware](https://infineon.github.io/capsense/capsense_api_reference_manual/html/index.html); see the ModusToolbox&trade; user guide for more details on selecting a middleware.
 
 This project also has an EZI2C peripheral.
 The EZI2C slave peripheral is used to monitor the information of a sensor's raw and processed data on a PC using the CAPSENSE&trade; Tuner available in the Eclipse IDE for ModusToolbox&trade; via I2C communication.
 
-The Firmware scans all the buttons and turns the corresponding LEDs ON or OFF based on the status of the buttons.
+The Firmware scans all the buttons and turns the corresponding LEDs on or off based on the status of the buttons.
 
 
 ### Set up the VDDA supply voltage and debug mode in Device Configurator
@@ -599,50 +663,50 @@ The Firmware scans all the buttons and turns the corresponding LEDs ON or OFF ba
 
    **Figure 22. Setting the VDDA supply in the System tab of Device Configurator**
 
-   <img src="images/vdda-setting.png" alt="Figure 22" width="800"/>
+   <img src="images/vdda-setting.png" width="800"/>
 
 3. Enable debug mode to enable SWD pins, as shown in **Figure 23**
 
    **Figure 23. Enable debug mode in the System tab of Device Configurator**
 
-   <img src="images/debug.png" alt="Figure 23" width="800"/>
+   <img src="images/debug.png" width="800"/>
 
 
 ### Resources and settings
 
    **Figure 24. EZI2C settings**
 
-   <img src="images/ezi2c_Settings.png" alt="Figure 24" width="800"/>
+   <img src="images/ezi2c_Settings.png" width="800"/>
    
    <br>
 
-**Table 6. Application resources**
+**Table 11. Application resources**
 
  Resource  |  Alias/object     |    Purpose
  :-------- | :-------------    | :------------
 SCB (EZI2C) (PDL) | CYBSP_EZI2C | EZI2C slave driver to communicate with CAPSENSE&trade; Tuner
-CAPSENSE&trade; (MSCLP0) | CYBSP_MSCLP0 | CAPSENSE&trade; driver to interact with the MSCLP hardware and interface the CAPSENSE&trade; sensors 
+CAPSENSE&trade; (MSCLP0) | CYBSP_MSC | CAPSENSE&trade; driver to interact with the MSCLP hardware and interface the CAPSENSE&trade; sensors 
 
 <br>
 
 
-### Firmware flow
+## Firmware flow
 
 **Figure 25. Firmware flowchart**
 
-<img src="images/firmware-flowchart.png" alt="Figure 25" width="450"/>
+<img src="images/firmware-flowchart.png" width="450"/>
 
 
 ## Related resources
 
 Resources  | Links
 -----------|----------------------------------
-Application notes  | [AN79953](https://www.infineon.com/AN79953) – Getting started with PSOC&trade; 4 <br> [AN85951](https://www.infineon.com/AN85951) – PSOC&trade; 4 and PSOC&trade; 6 MCU CAPSENSE&trade; design guide <br> [AN241091](https://www.infineon.com/AN241091) – Hover Touch sensing with PSOC&trade; 4 CAPSENSE&trade;  <br>  [AN234231](https://www.infineon.com/AN234231) – Achieving lowest-power capacitive sensing with PSOC&trade; 4000T <br> [AN92239](https://www.infineon.com/AN92239) – Proximity sensing with CAPSENSE&trade;
+Application notes  | [AN79953](https://www.infineon.com/AN79953) – Getting started with PSOC&trade; 4 MCU <br> [AN85951](https://www.infineon.com/AN85951) – PSOC&trade; 4 and PSOC&trade; 6 MCU CAPSENSE&trade; design guide <br> [AN241091](https://www.infineon.com/AN241091) – Hover Touch sensing with PSOC&trade; 4 CAPSENSE&trade;  <br>  [AN234231](https://www.infineon.com/AN234231) – PSOC&trade; 4 CAPSENSE™ ultra-low-power capacitive sensing techniques <br> [AN92239](https://www.infineon.com/AN92239) – Proximity sensing with CAPSENSE&trade;
 Code examples  | [Using ModusToolbox&trade;](https://github.com/Infineon/Code-Examples-for-ModusToolbox-Software) on GitHub
 Device documentation | [PSOC&trade; 4 datasheets](https://www.infineon.com/cms/en/search.html#!view=downloads&term=psoc4&doc_group=Data%20Sheet) <br>[PSOC&trade; 4 technical reference manuals](https://www.infineon.com/cms/en/search.html#!view=downloads&term=psoc4&doc_group=Additional%20Technical%20Information)
 Development kits | Select your kits from the [Evaluation board finder](https://www.infineon.com/cms/en/design-support/finder-selection-tools/product-finder/evaluation-board) page.
 Libraries on GitHub  | [mtb-pdl-cat2](https://github.com/Infineon/mtb-pdl-cat2) – PSOC&trade; 4 Peripheral Driver Library (PDL)
-Middleware on GitHub  | [CAPSENSE&trade;](https://github.com/Infineon/capsense) – CAPSENSE&trade; library and documents <br> [psoc4-middleware](https://github.com/Infineon/modustoolbox-software#libraries) – Links to all PSOC&trade; 4 middleware
+Middleware on GitHub  | [capsense](https://github.com/Infineon/capsense) – CAPSENSE&trade; library and documents <br> [psoc4-middleware](https://github.com/Infineon/modustoolbox-software#libraries) – Links to all PSOC&trade; 4 middleware
 Tools  | [ModusToolbox&trade;](https://www.infineon.com/modustoolbox) – ModusToolbox&trade; software is a collection of easy-to-use libraries and tools enabling rapid development with Infineon MCUs for applications ranging from wireless and cloud-connected systems, edge AI/ML, embedded sense and control, to wired USB connectivity using PSOC&trade; Industrial/IoT MCUs, AIROC&trade; Wi-Fi and Bluetooth&reg; connectivity devices, XMC&trade; Industrial MCUs, and EZ-USB&trade;/EZ-PD&trade; wired connectivity controllers. ModusToolbox&trade; incorporates a comprehensive set of BSPs, HAL, libraries, configuration tools, and provides support for industry-standard IDEs to fast-track your embedded application development.
 
 <br>
@@ -655,11 +719,12 @@ Infineon provides a wealth of data at [www.infineon.com](https://www.infineon.co
 
 ## Document history
 
-Document title: *CE241068 – PSOC&trade; 4: MSCLP CAPSENSE&trade; Hover Touch*
+Document title: *CE241068 – PSOC&trade; 4: MSCLP CAPSENSE&trade; hover touch*
 
  Version | Description of change
  ------- | ---------------------
  1.0.0   |  New code example
+ 2.0.0   |  Major update to support ModusToolbox&trade; v3.5. This version is not backward compatible with previous versions of ModusToolbox&trade;
 <br>
 
 

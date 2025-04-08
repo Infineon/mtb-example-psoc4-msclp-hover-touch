@@ -119,7 +119,7 @@ int main(void)
 
     for (;;)
     {
-    	/* Scan the normal Liquid Level Widget */
+    	/* Scan all Widget */
     	Cy_CapSense_ScanAllWidgets(&cy_capsense_context);
 
     	/* This is a place where all interrupt handlers will be executed */
