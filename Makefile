@@ -7,8 +7,8 @@
 #
 ################################################################################
 # \copyright
-# Copyright 2018-2025, Cypress Semiconductor Corporation (an Infineon company)
-# SPDX-License-Identifier: Apache-2.0
+# (c) 2018-2025, Infineon Technologies AG, or an affiliate of Infineon
+# Technologies AG.  SPDX-License-Identifier: Apache-2.0
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ TARGET=CY8CPROTO-040T-MS
 #
 # If APPNAME is edited, ensure to update or regenerate launch
 # configurations for your IDE.
-APPNAME=mtb-example-psoc4-msclp-hover-touch-4
+APPNAME=mtb-example-psoc4-msclp-hover-touch
 
 # Name of toolchain to use. Options include:
 #

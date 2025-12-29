@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration app="BACKEND" formatVersion="14" lastSavedWith="Configurator Backend" lastSavedWithVersion="3.50.0" toolsPackage="ModusToolbox 3.5.0" xmlns="http://cypress.com/xsd/cydesignfile_v5">
+<Configuration app="BACKEND" formatVersion="15" lastSavedWith="Configurator Backend" lastSavedWithVersion="3.70.0" toolsPackage="ModusToolbox 3.7.0" xmlns="http://cypress.com/xsd/cydesignfile_v7">
     <Devices>
         <Device mpn="CY8C4147AZQ-T495">
             <BlockConfig>
@@ -53,13 +53,13 @@
                         <Alias value="CYBSP_PWM1"/>
                     </Aliases>
                 </Block>
-                <Personality template="m0s8dap" version="1.0">
+                <Personality template="m0s8dap" version="1.0" instance="fR5GcyCeYzw">
                     <Block location="cpuss[0].dap[0]" locked="true"/>
                     <Parameters>
                         <Param id="dbgMode" value="SWD"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="EPciwyiQz2U">
                     <Block location="ioss[0].port[0].pin[0]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CS_SHIELD1"/>
@@ -75,7 +75,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="XIpt61TkcMg">
                     <Block location="ioss[0].port[0].pin[1]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CSD_PROX"/>
@@ -91,7 +91,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="SDX-Hr2g5H0">
                     <Block location="ioss[0].port[0].pin[4]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CSD_TP_COL4"/>
@@ -108,7 +108,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="CuLsTONbeZI">
                     <Block location="ioss[0].port[0].pin[5]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CSD_TP_COL3"/>
@@ -125,7 +125,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="TwvEK8SKN0Q">
                     <Block location="ioss[0].port[0].pin[6]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CSD_TP_COL2"/>
@@ -142,7 +142,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="KFkyVb-QaLA">
                     <Block location="ioss[0].port[0].pin[7]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CSD_TP_COL1"/>
@@ -159,7 +159,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="jgrpYvAz8y4">
                     <Block location="ioss[0].port[1].pin[0]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CMOD1"/>
@@ -175,7 +175,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="9QRvm54aiR8">
                     <Block location="ioss[0].port[1].pin[1]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CMOD2"/>
@@ -191,7 +191,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="4QHojczjlXo">
                     <Block location="ioss[0].port[1].pin[2]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CSD_TP_COL0"/>
@@ -208,7 +208,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="tXmTBJbphsw">
                     <Block location="ioss[0].port[1].pin[3]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CSD_TP_ROW3"/>
@@ -225,7 +225,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="xZaYRVgpTms">
                     <Block location="ioss[0].port[1].pin[4]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CSD_TP_ROW2"/>
@@ -242,7 +242,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="fVH-WZFt6yY">
                     <Block location="ioss[0].port[1].pin[5]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CSD_TP_ROW1"/>
@@ -259,7 +259,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="37lk5gy1nD8">
                     <Block location="ioss[0].port[1].pin[6]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CSD_TP_ROW0"/>
@@ -276,7 +276,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="efC1FLuyCj0">
                     <Block location="ioss[0].port[2].pin[0]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CS_HT_BTN3"/>
@@ -292,7 +292,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="eKXnGyuplxI">
                     <Block location="ioss[0].port[2].pin[1]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CS_HT_BTN4"/>
@@ -308,7 +308,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="Nku0eEjQc5Y">
                     <Block location="ioss[0].port[2].pin[2]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CS_HT_BTN2"/>
@@ -324,7 +324,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="naWV0EFSu2k">
                     <Block location="ioss[0].port[2].pin[3]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CS_HT_BTN1"/>
@@ -340,7 +340,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="3y59xOdEzhc">
                     <Block location="ioss[0].port[2].pin[4]" locked="true"/>
                     <Parameters>
                         <Param id="DriveModes" value="CY_GPIO_DM_ANALOG"/>
@@ -352,7 +352,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="ivT4JRBSddw">
                     <Block location="ioss[0].port[2].pin[5]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CS_HT_LED4"/>
@@ -368,7 +368,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="JSwINhK-SYs">
                     <Block location="ioss[0].port[2].pin[6]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CS_HT_LED2"/>
@@ -384,7 +384,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="A-SQDDmRv3Q">
                     <Block location="ioss[0].port[3].pin[1]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CS_HT_LED3"/>
@@ -400,7 +400,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="JfGE0M0Prao">
                     <Block location="ioss[0].port[3].pin[2]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_SWDIO"/>
@@ -416,7 +416,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="ZSRrtAJFEmk">
                     <Block location="ioss[0].port[3].pin[3]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_SWDCK"/>
@@ -432,7 +432,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="F6ykdO9fLfo">
                     <Block location="ioss[0].port[4].pin[0]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CS_HT_LED1"/>
@@ -448,7 +448,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="L-Sq32f8pRo">
                     <Block location="ioss[0].port[4].pin[3]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CS_SHIELD2"/>
@@ -464,7 +464,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="cFOD4tQP53s">
                     <Block location="ioss[0].port[4].pin[4]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CSD_BTN1"/>
@@ -480,7 +480,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="wN1zNWSKwsQ">
                     <Block location="ioss[0].port[4].pin[5]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CSX_BTN0_RX"/>
@@ -496,7 +496,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="mSpb-cKnHnQ">
                     <Block location="ioss[0].port[4].pin[6]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CSX_BTN0_TX"/>
@@ -512,7 +512,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="2whpuPhpiFg">
                     <Block location="ioss[0].port[6].pin[3]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_I2C_SCL"/>
@@ -528,7 +528,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8pin" version="2.0">
+                <Personality template="m0s8pin" version="2.0" instance="0tJOiz8FAtA">
                     <Block location="ioss[0].port[6].pin[4]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_I2C_SDA"/>
@@ -544,7 +544,7 @@
                         <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8mscv3lp" version="3.0">
+                <Personality template="m0s8mscv3lp" version="3.0" instance="spjmWzTLGDw">
                     <Block location="msclp[0].msclp[0]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_MSC"/>
@@ -564,7 +564,7 @@
                         <Param id="mscInstanceName" value="MSCLP0"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8mscv3lpsuperblock" version="1.0">
+                <Personality template="m0s8mscv3lpsuperblock" version="1.0" instance="tQzC1YGXZjw">
                     <Block location="msclp[0].msclp_superblock[0]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_CAPSENSE"/>
@@ -578,7 +578,7 @@
                         <Param id="liteConfig" value="false"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8peripheralclock" version="1.0">
+                <Personality template="m0s8peripheralclock" version="1.0" instance="4mfhiF9Z6Gs">
                     <Block location="peri[0].div_16[0]" locked="true"/>
                     <Parameters>
                         <Param id="calc" value="man"/>
@@ -588,7 +588,7 @@
                         <Param id="startOnReset" value="true"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8mxscb3ezi2c" version="1.0">
+                <Personality template="m0s8mxscb3ezi2c" version="1.0" instance="qnaCkPvFmew">
                     <Block location="scb[1]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_EZI2C"/>
@@ -604,39 +604,39 @@
                         <Param id="inFlash" value="true"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8sysclocks" version="2.0">
+                <Personality template="m0s8sysclocks" version="2.0" instance="DzvmsaUyomM">
                     <Block location="srss[0].clock[0]" locked="true"/>
                 </Personality>
-                <Personality template="m0s8hfclk" version="3.0">
+                <Personality template="m0s8hfclk" version="3.0" instance="ZyqD_lkqkJM">
                     <Block location="srss[0].clock[0].hfclk[0]" locked="true"/>
                     <Parameters>
                         <Param id="divider" value="1"/>
                         <Param id="sourceClock" value="IMO"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8ilo" version="2.0">
+                <Personality template="m0s8ilo" version="2.0" instance="28P3v5R5i0E">
                     <Block location="srss[0].clock[0].ilo[0]" locked="true"/>
                 </Personality>
-                <Personality template="m0s8imo" version="1.0">
+                <Personality template="m0s8imo" version="1.0" instance="Q4ZQeLiuEag">
                     <Block location="srss[0].clock[0].imo[0]" locked="true"/>
                     <Parameters>
                         <Param id="frequency" value="48000000"/>
                         <Param id="trim" value="2"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8lfclk" version="1.0">
+                <Personality template="m0s8lfclk" version="1.0" instance="uu04-A6db84">
                     <Block location="srss[0].clock[0].lfclk[0]" locked="true"/>
                     <Parameters>
                         <Param id="sourceClock" value="ILO"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8sysclk" version="1.0">
+                <Personality template="m0s8sysclk" version="1.0" instance="uwWsa0Qk7hc">
                     <Block location="srss[0].clock[0].sysclk[0]" locked="true"/>
                     <Parameters>
                         <Param id="divider" value="1"/>
                     </Parameters>
                 </Personality>
-                <Personality template="m0s8power" version="1.0">
+                <Personality template="m0s8power" version="1.0" instance="X30EOsex2co">
                     <Block location="srss[0].power[0]" locked="true"/>
                     <Parameters>
                         <Param id="AmuxPumpEn" value="false"/>

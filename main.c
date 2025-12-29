@@ -1,9 +1,10 @@
 /******************************************************************************
  * File Name: main.c
  *
- * Description: This is the source code for the PSoC 4 MSCLP self-capacitance
- * button tuning with Gesture detection code example for ModusToolbox.
- *
+ * Description: This is the source code for the PSoC 4: CAPSENSE&trade; MSCLP self-capacitance 
+ *              hover-touch code example for ModusToolbox.
+
+
  * Related Document: See README.md
  *
  *******************************************************************************
@@ -46,7 +47,6 @@
 #include "cybsp.h"
 #include "cycfg.h"
 #include "cycfg_capsense.h"
-
 /*******************************************************************************
  * User configurable Macros
  ********************************************************************************/
@@ -56,18 +56,14 @@
  * Fixed Macros
  *******************************************************************************/
 #define CAPSENSE_MSC0_INTR_PRIORITY     (3u)
-#define CY_ASSERT_FAILED                (0u)
-
-
+#define CY_ASSERT_FAILED                (0u)       
 /* EZI2C interrupt priority must be higher than CAPSENSE&trade; interrupt. */
 #define EZI2C_INTR_PRIORITY             (2u)
-
 
 /*******************************************************************************
  * Global Variables
  *******************************************************************************/
 cy_stc_scb_ezi2c_context_t ezi2c_context;
-
 /*******************************************************************************
  * Function Prototypes
  *******************************************************************************/
@@ -119,11 +115,11 @@ int main(void)
 
     for (;;)
     {
-    	/* Scan all Widget */
-    	Cy_CapSense_ScanAllWidgets(&cy_capsense_context);
+        /* Scan all Widgets */
+        Cy_CapSense_ScanAllWidgets(&cy_capsense_context);
 
-    	/* This is a place where all interrupt handlers will be executed */
-		interruptStatus = Cy_SysLib_EnterCriticalSection();
+        /* This is a place where all interrupt handlers will be executed */
+        interruptStatus = Cy_SysLib_EnterCriticalSection();
 
         while (Cy_CapSense_IsBusy(&cy_capsense_context))
         {
@@ -137,16 +133,16 @@ int main(void)
 
         Cy_SysLib_ExitCriticalSection(interruptStatus);
 
-        /* Process all th widgets */
+        /* Process all the widgets */
         Cy_CapSense_ProcessAllWidgets(&cy_capsense_context);
 
         /* Send capsense data to the Tuner */
         Cy_CapSense_RunTuner(&cy_capsense_context);
 
         led_control();
-
     }
 }
+
 
 /*******************************************************************************
  * Function Name: led_control
@@ -154,41 +150,83 @@ int main(void)
  * Summary:
  *  This function performs
  *  - Turning on/off LEDs corresponding to the button touches
- *  
+
  *******************************************************************************/
 
-void led_control(){
-
-    if(Cy_CapSense_IsWidgetActive(CY_CAPSENSE_BUTTON1_WDGT_ID, &cy_capsense_context)){
-        Cy_GPIO_Set(CYBSP_CS_HT_LED1_PORT, CYBSP_CS_HT_LED1_PIN);
-        Cy_GPIO_Clr(CYBSP_CS_HT_LED2_PORT, CYBSP_CS_HT_LED2_PIN);
-        Cy_GPIO_Clr(CYBSP_CS_HT_LED3_PORT, CYBSP_CS_HT_LED3_PIN);
-        Cy_GPIO_Clr(CYBSP_CS_HT_LED4_PORT, CYBSP_CS_HT_LED4_PIN);
+void led_control() {
+    /* Static variable to keep track of the currently active button (0 means no active button) */ 
+    static uint8_t activeButton = 0;
+    /* Temporary variable to store the detected button */ 
+    uint8_t detectedButton = 0;
+    
+    /* Check the status of each button */
+    if (Cy_CapSense_IsWidgetActive(CY_CAPSENSE_BUTTON1_WDGT_ID, &cy_capsense_context)) {
+        /* Button 1 is active */
+        detectedButton = 1;
+    } else if (Cy_CapSense_IsWidgetActive(CY_CAPSENSE_BUTTON2_WDGT_ID, &cy_capsense_context)) {
+        /* Button 2 is active  */ 
+        detectedButton = 2;  
+    } else if (Cy_CapSense_IsWidgetActive(CY_CAPSENSE_BUTTON3_WDGT_ID, &cy_capsense_context)) {
+        /* Button 3 is active */
+        detectedButton = 3;  
+    } else if (Cy_CapSense_IsWidgetActive(CY_CAPSENSE_BUTTON4_WDGT_ID, &cy_capsense_context)) {
+        /* Button 4 is active */ 
+        detectedButton = 4;  
     }
-    else if(Cy_CapSense_IsWidgetActive(CY_CAPSENSE_BUTTON2_WDGT_ID, &cy_capsense_context)){
-        Cy_GPIO_Clr(CYBSP_CS_HT_LED1_PORT, CYBSP_CS_HT_LED1_PIN);
-        Cy_GPIO_Set(CYBSP_CS_HT_LED2_PORT, CYBSP_CS_HT_LED2_PIN);
-        Cy_GPIO_Clr(CYBSP_CS_HT_LED3_PORT, CYBSP_CS_HT_LED3_PIN);
-        Cy_GPIO_Clr(CYBSP_CS_HT_LED4_PORT, CYBSP_CS_HT_LED4_PIN);
+    
+    /* Maintain or update the active button */ 
+    if (activeButton != 0) {
+        /* If an active button exists, check if it is still being touched */ 
+        if (!Cy_CapSense_IsWidgetActive(CY_CAPSENSE_BUTTON1_WDGT_ID + activeButton - 1, &cy_capsense_context)) {
+            /* If the active button is no longer touched, clear it */
+            activeButton = 0;
+        }
     }
-    else if(Cy_CapSense_IsWidgetActive(CY_CAPSENSE_BUTTON3_WDGT_ID, &cy_capsense_context)){
-        Cy_GPIO_Clr(CYBSP_CS_HT_LED1_PORT, CYBSP_CS_HT_LED1_PIN);
-        Cy_GPIO_Clr(CYBSP_CS_HT_LED2_PORT, CYBSP_CS_HT_LED2_PIN);
-        Cy_GPIO_Set(CYBSP_CS_HT_LED3_PORT, CYBSP_CS_HT_LED3_PIN);
-        Cy_GPIO_Clr(CYBSP_CS_HT_LED4_PORT, CYBSP_CS_HT_LED4_PIN);
+    
+    /* Update the active button if a new button is detected and no active button exists */ 
+    if (activeButton == 0 && detectedButton != 0) {
+        /* Assign the detected button as the new active button */ 
+        activeButton = detectedButton;
     }
-    else if(Cy_CapSense_IsWidgetActive(CY_CAPSENSE_BUTTON4_WDGT_ID, &cy_capsense_context)){
-        Cy_GPIO_Clr(CYBSP_CS_HT_LED1_PORT, CYBSP_CS_HT_LED1_PIN);
-        Cy_GPIO_Clr(CYBSP_CS_HT_LED2_PORT, CYBSP_CS_HT_LED2_PIN);
-        Cy_GPIO_Clr(CYBSP_CS_HT_LED3_PORT, CYBSP_CS_HT_LED3_PIN);
-        Cy_GPIO_Set(CYBSP_CS_HT_LED4_PORT, CYBSP_CS_HT_LED4_PIN);
-    }
-    else {
-        Cy_GPIO_Clr(CYBSP_CS_HT_LED1_PORT, CYBSP_CS_HT_LED1_PIN);
-        Cy_GPIO_Clr(CYBSP_CS_HT_LED2_PORT, CYBSP_CS_HT_LED2_PIN);
-        Cy_GPIO_Clr(CYBSP_CS_HT_LED3_PORT, CYBSP_CS_HT_LED3_PIN);
-        Cy_GPIO_Clr(CYBSP_CS_HT_LED4_PORT, CYBSP_CS_HT_LED4_PIN);
-    }
+    
+    /* Update LEDs based on the active button */ 
+    switch (activeButton) {
+        case 1:
+            /* Turn ON LED1 and turn OFF other LEDs */ 
+            Cy_GPIO_Set(CYBSP_CS_HT_LED1_PORT, CYBSP_CS_HT_LED1_PIN);
+            Cy_GPIO_Clr(CYBSP_CS_HT_LED2_PORT, CYBSP_CS_HT_LED2_PIN);
+            Cy_GPIO_Clr(CYBSP_CS_HT_LED3_PORT, CYBSP_CS_HT_LED3_PIN);
+            Cy_GPIO_Clr(CYBSP_CS_HT_LED4_PORT, CYBSP_CS_HT_LED4_PIN);
+            break;
+        case 2:
+            /* Turn ON LED2 and turn OFF other LEDs */
+            Cy_GPIO_Clr(CYBSP_CS_HT_LED1_PORT, CYBSP_CS_HT_LED1_PIN);
+            Cy_GPIO_Set(CYBSP_CS_HT_LED2_PORT, CYBSP_CS_HT_LED2_PIN);
+            Cy_GPIO_Clr(CYBSP_CS_HT_LED3_PORT, CYBSP_CS_HT_LED3_PIN);
+            Cy_GPIO_Clr(CYBSP_CS_HT_LED4_PORT, CYBSP_CS_HT_LED4_PIN);
+            break;
+        case 3:
+            /* Turn ON LED3 and turn OFF other LEDs */ 
+            Cy_GPIO_Clr(CYBSP_CS_HT_LED1_PORT, CYBSP_CS_HT_LED1_PIN);
+            Cy_GPIO_Clr(CYBSP_CS_HT_LED2_PORT, CYBSP_CS_HT_LED2_PIN);
+            Cy_GPIO_Set(CYBSP_CS_HT_LED3_PORT, CYBSP_CS_HT_LED3_PIN);
+            Cy_GPIO_Clr(CYBSP_CS_HT_LED4_PORT, CYBSP_CS_HT_LED4_PIN);
+            break;
+        case 4:
+            /* Turn ON LED4 and turn OFF other LEDs */ 
+            Cy_GPIO_Clr(CYBSP_CS_HT_LED1_PORT, CYBSP_CS_HT_LED1_PIN);
+            Cy_GPIO_Clr(CYBSP_CS_HT_LED2_PORT, CYBSP_CS_HT_LED2_PIN);
+            Cy_GPIO_Clr(CYBSP_CS_HT_LED3_PORT, CYBSP_CS_HT_LED3_PIN);
+            Cy_GPIO_Set(CYBSP_CS_HT_LED4_PORT, CYBSP_CS_HT_LED4_PIN);
+            break;
+        default:
+            /* If no button is active, turn OFF all LEDs */
+            Cy_GPIO_Clr(CYBSP_CS_HT_LED1_PORT, CYBSP_CS_HT_LED1_PIN);
+            Cy_GPIO_Clr(CYBSP_CS_HT_LED2_PORT, CYBSP_CS_HT_LED2_PIN);
+            Cy_GPIO_Clr(CYBSP_CS_HT_LED3_PORT, CYBSP_CS_HT_LED3_PIN);
+            Cy_GPIO_Clr(CYBSP_CS_HT_LED4_PORT, CYBSP_CS_HT_LED4_PIN);
+            break;
+        }
 }
 
 
@@ -196,7 +234,7 @@ void led_control(){
  * Function Name: initialize_capsense
  ********************************************************************************
  * Summary:
- *  This function initializes the CAPSENSE and configures the CAPSENSE
+ *  This function initializes the CAPSENSE and configures the CAPSENSE 
  *  interrupt.
  *
  *******************************************************************************/
@@ -213,18 +251,15 @@ static void initialize_capsense(void)
 
     /* Capture the MSC HW block and initialize it to the default state. */
     status = Cy_CapSense_Init(&cy_capsense_context);
-
     if (CY_CAPSENSE_STATUS_SUCCESS == status)
     {
         /* Initialize CAPSENSE interrupt for MSCLP 0 */
         Cy_SysInt_Init(&capsense_msc0_interrupt_config, capsense_msc0_isr);
         NVIC_ClearPendingIRQ(capsense_msc0_interrupt_config.intrSrc);
         NVIC_EnableIRQ(capsense_msc0_interrupt_config.intrSrc);
-
         /* Initialize the CAPSENSE firmware modules. */
         status = Cy_CapSense_Enable(&cy_capsense_context);
     }
-
     if(status != CY_CAPSENSE_STATUS_SUCCESS)
     {
         /* This status could fail before tuning the sensors correctly.
@@ -237,8 +272,7 @@ static void initialize_capsense(void)
  * Function Name: capsense_msc0_isr
  ********************************************************************************
  * Summary:
- *  Wrapper function for handling interrupts from CAPSENSE MSC0 block.
- *
+ *  Wrapper to handle interrupts from CAPSENSE MSC0 block.
  *******************************************************************************/
 static void capsense_msc0_isr(void)
 {
@@ -253,9 +287,9 @@ static void capsense_msc0_isr(void)
  *
  *******************************************************************************/
 static void initialize_capsense_tuner(void)
-{
+{   
     cy_en_scb_ezi2c_status_t status = CY_SCB_EZI2C_SUCCESS;
-
+    
     /* EZI2C interrupt configuration structure */
     const cy_stc_sysint_t ezi2c_intr_config =
     {
@@ -263,15 +297,14 @@ static void initialize_capsense_tuner(void)
             .intrPriority = EZI2C_INTR_PRIORITY,
     };
 
-    /* Initialize the EzI2C firmware module */
-    status = Cy_SCB_EZI2C_Init(CYBSP_EZI2C_HW, &CYBSP_EZI2C_config, &ezi2c_context);
+    /* Initialize EzI2C firmware module */
+     status = Cy_SCB_EZI2C_Init(CYBSP_EZI2C_HW, &CYBSP_EZI2C_config, &ezi2c_context);
     if(status != CY_SCB_EZI2C_SUCCESS)
     {
         CY_ASSERT(CY_ASSERT_FAILED);
     }
     Cy_SysInt_Init(&ezi2c_intr_config, ezi2c_isr);
     NVIC_EnableIRQ(ezi2c_intr_config.intrSrc);
-
     /* Set the CAPSENSE data structure as the I2C buffer to be exposed to the
      * master on primary slave address interface. Any I2C host tools such as
      * the Tuner or the Bridge Control Panel can read this buffer but you can
@@ -280,7 +313,6 @@ static void initialize_capsense_tuner(void)
     Cy_SCB_EZI2C_SetBuffer1(CYBSP_EZI2C_HW, (uint8_t *)&cy_capsense_tuner,
             sizeof(cy_capsense_tuner), sizeof(cy_capsense_tuner),
             &ezi2c_context);
-
     Cy_SCB_EZI2C_Enable(CYBSP_EZI2C_HW);
 }
 
@@ -288,15 +320,11 @@ static void initialize_capsense_tuner(void)
  * Function Name: ezi2c_isr
  ********************************************************************************
  * Summary:
- * Wrapper function for handling interrupts from EZI2C block.
- *
+ *  Wrapper to handle interrupts from EZI2C block.
  *******************************************************************************/
 static void ezi2c_isr(void)
 {
     Cy_SCB_EZI2C_Interrupt(CYBSP_EZI2C_HW, &ezi2c_context);
 }
-
-
-
 
 /* [] END OF FILE */
